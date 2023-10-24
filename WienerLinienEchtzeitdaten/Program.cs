@@ -7,6 +7,11 @@ namespace WienerLinienEchtzeitdaten
     internal class Program
     {
 
+        public static Fahrwegverlauf[] readFahrwegverlaufFromFile(string filepath)
+        {
+            
+        }
+
         public static Haltepunkt[] readHaltepunkteFromFile(string filepath)
         {
             // liste anlegen, ähnlich wie ein array nur das der speicher dynamisch allokiert werden kann
@@ -114,8 +119,11 @@ namespace WienerLinienEchtzeitdaten
                     // der pfad ist bei jedem anders
                     "C:\\Users\\max\\Downloads\\wienerlinien-ogd-linien(1).csv"
                 );
-            
-            Haltepunkt[] haltepunkte = readHaltepunkteFromFile("")
+
+            Haltepunkt[] haltepunkte = readHaltepunkteFromFile("");
+
+            Haltepunkt h = new Haltepunkt();
+            h.StopText = "NameHaltestelle";
             
             Console.WriteLine(linienWien);
         }

@@ -40,6 +40,7 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Fahrwegverlauf.cs" />
         <Compile Include="Haltepunkt.cs" />
         <Compile Include="Linie.cs" />
         <Compile Include="Program.cs"/>
