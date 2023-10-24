@@ -11,6 +11,10 @@
             this.StopText = stopText;
         }
 
+        public Haltepunkt()
+        {
+        }
+
         public int StopId
         {
             get => stopId;

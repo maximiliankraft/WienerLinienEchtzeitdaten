@@ -3,9 +3,9 @@
     public class Fahrwegverlauf
     {
         private int lineId;
-        private string stopId;
+        private int stopId;
 
-        public Fahrwegverlauf(int lineId, string stopId)
+        public Fahrwegverlauf(int lineId, int stopId)
         {
             this.lineId = lineId;
             this.stopId = stopId;
@@ -17,7 +17,7 @@
             set => lineId = value;
         }
 
-        public string StopId
+        public int StopId
         {
             get => stopId;
             set => stopId = value;

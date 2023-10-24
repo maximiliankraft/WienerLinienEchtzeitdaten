@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 
 namespace WienerLinienEchtzeitdaten
 {
@@ -9,7 +10,27 @@ namespace WienerLinienEchtzeitdaten
 
         public static Fahrwegverlauf[] readFahrwegverlaufFromFile(string filepath)
         {
-            
+            List<Fahrwegverlauf> fahrwegverlaeufe = new List<Fahrwegverlauf>();
+            FileStream fs = File.OpenRead(filepath);
+            StreamReader reader = new StreamReader(fs);
+
+            // LineId am Index 0
+            // StopId am Index 3
+
+            while (!reader.EndOfStream)
+            {
+                string fileLine = reader.ReadLine();
+                string[] fileLineCells = fileLine.Split(';');
+
+                int lineId = int.Parse(fileLineCells[0]);
+                int stopId = int.Parse(fileLineCells[3]);
+
+                Fahrwegverlauf fahrwegverlauf = new Fahrwegverlauf(lineId, stopId);
+                fahrwegverlaeufe.Add(fahrwegverlauf);
+            }
+
+            return fahrwegverlaeufe.ToArray();
+
         }
 
         public static Haltepunkt[] readHaltepunkteFromFile(string filepath)
@@ -27,10 +48,10 @@ namespace WienerLinienEchtzeitdaten
             while (!reader.EndOfStream)
             {
                 // nächste zeile einlesen
-                string lineStr = reader.ReadLine();
+                string lineStr = reader.ReadLine(); // "302;U2;2;0;ptMetro"
                 
                 // zeile beim semikolon in teilstrings aufsplitten
-                string[] values = lineStr.Split(';');
+                string[] values = lineStr.Split(';'); // ["302","U2","2","0","ptMetro"]
 
                 
 
@@ -38,23 +59,23 @@ namespace WienerLinienEchtzeitdaten
                 // values[1] == LineText
                 
                 // Klasse linie anlegen
-                Linie line = new Linie();
+                Haltepunkt haltepunkt = new Haltepunkt();
                 
                 // aus den eingelesenen values die klasse aufbauen
                 try
                 {
-                    line.LineId = int.Parse(values[0]);
+                    haltepunkt.StopId = int.Parse(values[0]);
                 }
                 catch (Exception e)
                 {
-                    // Console.WriteLine(e);
+                    // überspringen des schleifendurchgangs
                     continue;
                 }
                 
-                line.LineText = values[1];
+                haltepunkt.StopText = values[1];
                 
                 // klasse zur liste hinzufügen
-                linien.Add(line);
+                linien.Add(haltepunkt);
             }
 
             // die liste (konvertiert als array) zurückgeben 
