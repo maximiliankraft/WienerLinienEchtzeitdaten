@@ -142,9 +142,32 @@ namespace WienerLinienEchtzeitdaten
                 );
 
             Haltepunkt[] haltepunkte = readHaltepunkteFromFile("");
+            Fahrwegverlauf[] fahrwegverlaeufe = readFahrwegverlaufFromFile("");
 
-            Haltepunkt h = new Haltepunkt();
-            h.StopText = "NameHaltestelle";
+            Dictionary<int, Haltepunkt> haltepunktDict = new Dictionary<int, Haltepunkt>();
+            Dictionary<int, Linie> linienDict = new Dictionary<int, Linie>();
+            
+            foreach (var haltepunkt in haltepunkte)
+            {
+                haltepunktDict.Add(haltepunkt.StopId, haltepunkt);
+            }
+
+            foreach (var linie in linienWien)
+            {
+                linienDict.Add(linie.LineId, linie);
+            }
+
+            foreach (var fahrwegverlauf in fahrwegverlaeufe)
+            {
+                Linie linie;
+                Haltepunkt haltepunkt;
+                linienDict.TryGetValue(fahrwegverlauf.LineId, out linie);
+                haltepunktDict.TryGetValue(fahrwegverlauf.StopId, out haltepunkt);
+
+                linie.AddStop(haltepunkt);
+            }
+            
+            
             
             Console.WriteLine(linienWien);
         }

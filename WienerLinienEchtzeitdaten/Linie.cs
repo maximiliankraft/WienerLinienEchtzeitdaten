@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WienerLinienEchtzeitdaten
 {
@@ -7,6 +8,19 @@ namespace WienerLinienEchtzeitdaten
         // Attribute der Klasse
         private int lineID;
         private string lineText;
+        private List<Haltepunkt> stops = new List<Haltepunkt>();
+
+        public List<Haltepunkt> Stops
+        {
+            get => stops;
+        }
+
+        public void AddStop(Haltepunkt haltepunkt)
+        {
+            stops.Add(haltepunkt);
+        }
+        
+        
 
         // Methode der Klasse
         private int checkLineId(int value)
