@@ -8,10 +8,29 @@ namespace WienerLinienEchtzeitdaten
         // Attribute der Klasse
         private int lineID;
         private string lineText;
-        
-        private List<Haltepunkt> _haltepunkte;
 
-        void addHaltepunkt(Haltepunkt h)
+        public override string ToString()
+        {
+            var result =  "ID: " + lineID + " Name: " + lineText + "\n";
+
+            foreach (var haltepunkt in _haltepunkte)
+            {
+                result += haltepunkt + "\n";
+            }
+
+            return result;
+        }
+
+        private List<Haltepunkt> _haltepunkte = new List<Haltepunkt>();
+
+        public List<Haltepunkt> Haltepunkte {
+            get
+            {
+                return _haltepunkte;
+            }
+        }
+
+        public void addHaltepunkt(Haltepunkt h)
         {
             _haltepunkte.Add(h);
         }

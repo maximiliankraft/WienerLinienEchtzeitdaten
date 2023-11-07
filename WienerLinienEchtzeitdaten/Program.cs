@@ -22,11 +22,18 @@ namespace WienerLinienEchtzeitdaten
                 string fileLine = reader.ReadLine();
                 string[] fileLineCells = fileLine.Split(';');
 
-                int lineId = int.Parse(fileLineCells[0]);
-                int stopId = int.Parse(fileLineCells[3]);
-
-                Fahrwegverlauf fahrwegverlauf = new Fahrwegverlauf(lineId, stopId);
-                fahrwegverlaeufe.Add(fahrwegverlauf);
+                try
+                {
+                    int lineId = int.Parse(fileLineCells[0]);
+                    int stopId = int.Parse(fileLineCells[3]);
+                    
+                    Fahrwegverlauf fahrwegverlauf = new Fahrwegverlauf(lineId, stopId);
+                    fahrwegverlaeufe.Add(fahrwegverlauf);
+                }
+                catch (Exception e)
+                {
+                    continue;
+                }
             }
 
             return fahrwegverlaeufe.ToArray();
@@ -52,9 +59,7 @@ namespace WienerLinienEchtzeitdaten
                 
                 // zeile beim semikolon in teilstrings aufsplitten
                 string[] values = lineStr.Split(';'); // ["302","U2","2","0","ptMetro"]
-
                 
-
                 // values[0] == LineId
                 // values[1] == LineText
                 
@@ -72,7 +77,7 @@ namespace WienerLinienEchtzeitdaten
                     continue;
                 }
                 
-                haltepunkt.StopText = values[1];
+                haltepunkt.StopText = values[2];
                 
                 // klasse zur liste hinzufügen
                 linien.Add(haltepunkt);
@@ -144,23 +149,47 @@ namespace WienerLinienEchtzeitdaten
             Haltepunkt[] haltepunkte = 
                 readHaltepunkteFromFile("C:\\Users\\max\\Downloads\\wienerlinien-ogd-haltepunkte(1).csv");
 
+            
+            
             Fahrwegverlauf[] verlauefe =
                 readFahrwegverlaufFromFile("C:\\Users\\max\\Downloads\\wienerlinien-ogd-fahrwegverlaeufe(1).csv");
             
             // todo: alle Haltepunkte sollen zur entsprechenden Linie
             // hinzugefügt werden. Basierend auf den Fahrwegverläufen
-
-            var x = 1;
+            
             
             foreach (var fahrwegverlauf in verlauefe)
             {
                 int currentLineId = fahrwegverlauf.LineId;
-                // todo: linien objekt finden anhand der lineId
+                int currentStopId = fahrwegverlauf.StopId;
+                Linie linie = null;
+                Haltepunkt haltepunkt = null;
                 
+                // todo: linien objekt finden anhand der lineId
+                foreach (var l in linienWien)
+                {
+                    if (l.LineId == currentLineId)
+                    {
+                        linie = l;
+                    }  
+                }
+
+                foreach (var h in haltepunkte)
+                {
+                    if (h.StopId == currentStopId)
+                    {
+                        haltepunkt = h;
+                    }
+                }
+
+                if (linie != null && haltepunkt != null)
+                {
+                    linie.addHaltepunkt(haltepunkt);
+                }
             }
             
             
-            Console.WriteLine(linienWien);
+            Console.WriteLine(linienWien[4]);
         }
     }
 }

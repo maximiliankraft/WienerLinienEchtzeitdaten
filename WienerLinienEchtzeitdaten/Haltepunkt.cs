@@ -7,12 +7,15 @@ namespace WienerLinienEchtzeitdaten
         private int stopId;
         private string stopText;
 
-        
-
         public Haltepunkt(int stopId, string stopText)
         {
             this.StopId = stopId;
             this.StopText = stopText;
+        }
+
+        public override string ToString()
+        {
+            return "ID: " + stopId + " Name: " + stopText;
         }
 
         public Haltepunkt()
