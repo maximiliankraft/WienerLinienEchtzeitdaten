@@ -1,9 +1,13 @@
-﻿namespace WienerLinienEchtzeitdaten
+﻿using System.Collections.Generic;
+
+namespace WienerLinienEchtzeitdaten
 {
     public class Haltepunkt
     {
         private int stopId;
         private string stopText;
+
+        
 
         public Haltepunkt(int stopId, string stopText)
         {

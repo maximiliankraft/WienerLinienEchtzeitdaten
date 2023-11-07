@@ -11,8 +11,8 @@ namespace WienerLinienEchtzeitdaten
         public static Fahrwegverlauf[] readFahrwegverlaufFromFile(string filepath)
         {
             List<Fahrwegverlauf> fahrwegverlaeufe = new List<Fahrwegverlauf>();
-            FileStream fs = File.OpenRead(filepath);
-            StreamReader reader = new StreamReader(fs);
+            FileStream fs = File.OpenRead(filepath); // öffnet die datei
+            StreamReader reader = new StreamReader(fs); // liest die datei zeilenweisen ein
 
             // LineId am Index 0
             // StopId am Index 3
@@ -141,10 +141,24 @@ namespace WienerLinienEchtzeitdaten
                     "C:\\Users\\max\\Downloads\\wienerlinien-ogd-linien(1).csv"
                 );
 
-            Haltepunkt[] haltepunkte = readHaltepunkteFromFile("");
+            Haltepunkt[] haltepunkte = 
+                readHaltepunkteFromFile("C:\\Users\\max\\Downloads\\wienerlinien-ogd-haltepunkte(1).csv");
 
-            Haltepunkt h = new Haltepunkt();
-            h.StopText = "NameHaltestelle";
+            Fahrwegverlauf[] verlauefe =
+                readFahrwegverlaufFromFile("C:\\Users\\max\\Downloads\\wienerlinien-ogd-fahrwegverlaeufe(1).csv");
+            
+            // todo: alle Haltepunkte sollen zur entsprechenden Linie
+            // hinzugefügt werden. Basierend auf den Fahrwegverläufen
+
+            var x = 1;
+            
+            foreach (var fahrwegverlauf in verlauefe)
+            {
+                int currentLineId = fahrwegverlauf.LineId;
+                // todo: linien objekt finden anhand der lineId
+                
+            }
+            
             
             Console.WriteLine(linienWien);
         }
